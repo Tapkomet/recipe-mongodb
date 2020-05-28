@@ -1,5 +1,6 @@
 package guru.springframework.domain;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -7,9 +8,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Set;
 
-/**
- * Created by jt on 6/13/17.
- */
+@EqualsAndHashCode
 @Getter
 @Setter
 @Document

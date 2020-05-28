@@ -46,7 +46,7 @@ public class RecipeServiceImpl implements RecipeService {
         Optional<Recipe> recipeOptional = recipeRepository.findById(id);
 
         if (!recipeOptional.isPresent()) {
-            throw new NotFoundException("Recipe Not Found. For ID value: " + id );
+            throw new NotFoundException("Recipe Not Found. For ID value: " + id);
         }
 
         return recipeOptional.get();
@@ -55,7 +55,17 @@ public class RecipeServiceImpl implements RecipeService {
     @Override
     @Transactional
     public RecipeCommand findCommandById(String id) {
-        return recipeToRecipeCommand.convert(findById(id));
+
+        RecipeCommand recipeCommand = recipeToRecipeCommand.convert(findById(id));
+
+        //enhance command object with id value
+        if (recipeCommand.getIngredients() != null && recipeCommand.getIngredients().size() > 0) {
+            recipeCommand.getIngredients().forEach(rc -> {
+                rc.setRecipeId(recipeCommand.getId());
+            });
+        }
+
+        return recipeCommand;
     }
 
     @Override
